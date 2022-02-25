@@ -1,0 +1,14 @@
+
+@media screen and (max-width: 457px) {
+          .actionsContainer {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-around;
+                    
+          }
+
+          .actionsContainer > * {
+                    margin-bottom: 10px;
+                    font-size: medium;
+          }
+}

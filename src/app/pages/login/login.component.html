@@ -1,0 +1,27 @@
+
+                              <div class="d-flex h-100 flex-column justify-content-center
+                              align-items-center"> 
+
+                              
+                              <h1>Amazonas Library</h1>
+                              <div class="container d-flex flex-column align-items-center">
+                                        
+                                        <form autocomplete="off" [formGroup]="myForm">
+                                                  <div>
+                                                            <label class="form-label mt-5 mb-3">Username</label>
+                                                            <input type="text" formControlName="username" class="form-control">
+                                                            <span *ngIf="myForm.controls['username'].errors?.['required'] && myForm.controls['username'].touched" class="form-text text-danger" >The username is required</span>
+                                                  </div>
+                                                  <div>
+                                                            <label class="form-label mt-4 mb-3">Password</label>
+                                                            <input type="password" formControlName="password" class="form-control mb-3">
+                                                            <span *ngIf="myForm.controls['password'].errors?.['required'] && myForm.controls['password'].touched" class="form-text text-danger" >The password is required</span>
+                                                  </div>
+                                                  
+                                        </form>
+                                        <div class="container mt-4 actionsContainer">
+                                                  <button class="btn btn-primary p-2  btn-lg me-3" (click)="login()" [disabled]="!myForm.valid">Login</button> 
+                                                  <button type="button" class="btn btn-secondary p-2  btn-lg" (click)="signUp()">Sign Up</button>
+                                        </div>
+                              </div>
+                    </div>
