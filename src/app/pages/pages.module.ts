@@ -8,6 +8,7 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SendEmailComponent } from './send-email/send-email.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MainPageComponent,
     ProfileComponent,
     HomePageComponent,
+    SendEmailComponent,
   ],
   imports: [
     CommonModule,

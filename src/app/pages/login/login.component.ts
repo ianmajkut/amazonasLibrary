@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -8,20 +9,41 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  
+  textError: string = ''
+  dataIsCorrect: boolean = true
+
+  emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"
 
   myForm: FormGroup = this.fb.group({
-    username: ['', Validators.required],
+    email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
     password: ['', Validators.required],
 
   })
 
-  constructor(private fb: FormBuilder, private router: Router) { }
+  constructor(private fb: FormBuilder, private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
   }
 
-  login(){
-    console.log(this.myForm.value); 
+  async login(){
+    const {email, password} = this.myForm.value
+    try{
+      //Pass the email and password to the userService.login() method
+     const user = await this.userService.login(email, password)
+     //If the user is not null and the status is verified, navigate to the home page
+     if(user && user.user?.emailVerified){
+      this.router.navigateByUrl('/home')
+     }//If the user exists but the status is not verified, navigate to the verification page
+     else if(user){
+      this.router.navigateByUrl('/auth/verification')
+     }
+    }
+    catch(error: any){
+      this.dataIsCorrect = false
+      this.textError = error.message
+    }
+    
   }
 
   signUp(){
