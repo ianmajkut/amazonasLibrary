@@ -11,11 +11,13 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 //Http
 import { HttpClientModule } from "@angular/common/http";
+import { BookDetailsComponent } from './pages/main-app/book-details/book-details.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BookDetailsComponent
   ],
   imports: [
     BrowserModule,

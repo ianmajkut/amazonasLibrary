@@ -24,17 +24,23 @@ export class BooksComponent implements OnInit {
   @ViewChild('myForm') myForm!: NgForm
   search!: string
 
+  //PROBLEM: ISSBN IS NOT PRESENT OF CERTAINS BOOKS
+
   constructor(private bookService: BooksService) { 
     this.bookService.getHomeBooksTemplate().subscribe(
       (data) => {
-        for(let item of data.items){
+        data.items.forEach((item: any, index: number) => {
           let book : any  = {
-            title: item.volumeInfo?.title,
-            description: item.volumeInfo?.description,
+            title: item.volumeInfo.title,
+            id: item.id,
+            isbn: item.volumeInfo.industryIdentifiers?.filter((item: any) => item.type === 'ISBN_13')[0]?.identifier,
+            description: item.volumeInfo.description ,
             thumbnail: item.volumeInfo.imageLinks?.smallThumbnail  
           }
+          //console.log(book);
           this.books.push(book)
-        }
+          
+        })
       }
     )
     
@@ -46,23 +52,31 @@ export class BooksComponent implements OnInit {
   searchBook(){
     const searchValue = this.search
     
-    
     this.bookService.searchBook(searchValue).subscribe(
       (data) => {
         this.books = []
-        console.log(data);
-        for(let item of data.items){
+        //console.log(data);
+        data.items.forEach((item: any, index: number) => {
           let book : any  = {
             title: item.volumeInfo.title,
+            id: item.id,
+            isbn: item.volumeInfo.industryIdentifiers?.filter((item: any) => item.type === 'ISBN_13')[0]?.identifier,
             description: item.volumeInfo.description ,
             thumbnail: item.volumeInfo.imageLinks?.smallThumbnail  
           }
-          console.log(this.books);
           this.books.push(book)
           
-        }
+        })
       }
     )
   }
+
+  index(book: GoogleBookAPI){
+    console.log(book);
+  }
+
+  
+
+  
 
 }

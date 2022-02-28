@@ -12,12 +12,14 @@ export class BooksService {
   private key: string = environment.apiKeyBooks
   private baseUrl: string = 'https://www.googleapis.com/books/v1/volumes'
 
+  
+
   constructor(private http: HttpClient) { }
 
   getHomeBooksTemplate() : Observable<GoogleBookAPI>
   {
     const params = new HttpParams()
-                  .set('q', 'book')
+                  .set('q', 'star wars')
                   .set('maxResults', '40')
                   .set('key', this.key )
 
@@ -31,5 +33,9 @@ export class BooksService {
                   .set('key', this.key )
 
     return this.http.get<GoogleBookAPI>(`${this.baseUrl}`, {params})
+  }
+
+  seachBookById(id:string){
+    return this.http.get<GoogleBookAPI>(`${this.baseUrl}/${id}`)
   }
 }

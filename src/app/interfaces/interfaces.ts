@@ -20,10 +20,14 @@ export interface BookEntered {
           isbn: number;
 }
 
+
+
 //Book interface
 
 
 export interface GoogleBookAPI {
+          id: any;
+          volumeInfo: any;
           kind:       string;
           totalItems: number;
           items:      Item[];

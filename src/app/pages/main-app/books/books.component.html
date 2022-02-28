@@ -4,15 +4,23 @@
                     <button [disabled]="myForm.invalid" type="button" class="btn btn-outline-success" (click)="searchBook()">Search</button>
           </form>
           <div class="row mt-5">
-                    <div class="col-sm-3 " *ngFor="let book of books">
-                              <div class="card mb-2" style="width: 18rem;">
-                                        <img src="{{book.thumbnail}}" class="card-img-top" alt="...">
+                    <div class="col-sm-12 col-xxl-3 col-xl-4 col-lg-4 col-md-6" *ngFor="let book of books; let i = index ">
+                              <div class="card mb-4" style="width: 18rem; height: 600px;">
+                                        <img *ngIf="book.thumbnail" src="{{book.thumbnail}}" class="card-img-top" alt="...">
+                                        <img *ngIf="!book.thumbnail" src="../../../../assets/noPhoto.jpg" class="card-img-top" alt="...">
                                         <div class="card-body">
                                         <h5 class="card-title">{{book.title}}</h5>
                                         <p class="card-text">{{book.description | slice:0:100 }} ...</p>
-                                        <a href="#" class="btn btn-primary">Check Availability</a>
+                                        <a class="btn btn-primary" [routerLink]="['/home/', book.id ]">Get Info</a>
                                         </div>
+                                        
                               </div>
+                              
                     </div>
+                    
           </div>
 </div>
+
+
+
+
