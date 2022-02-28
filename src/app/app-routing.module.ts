@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './pages/home-page/home-page.component';
+
 
 const routes: Routes = [
   {
     path: 'auth',
-    loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
+    loadChildren: () => import('./pages/register-login/register-login.module').then(m => m.RegisterLoginModule)
   },
   {
     path: 'home',
-    component: HomePageComponent
+    loadChildren: () => import('./pages/main-app/books.module').then(m => m.BooksModule)
   },
   {
     path: '**',

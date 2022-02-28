@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './home-page/home-page.component';
+import { HomePageComponent } from '../main-app/home-page/home-page.component';
 import { LoginComponent } from './login/login.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { SendEmailComponent } from './send-email/send-email.component';

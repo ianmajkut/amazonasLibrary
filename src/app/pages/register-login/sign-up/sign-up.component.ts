@@ -26,7 +26,7 @@ export class SignUpComponent implements OnInit {
     // The last validator is a asyncValidator  
     username: ['', [Validators.required, Validators.minLength(5)],[this.signUpService.checkUser.bind(this.signUpService)]],
     password: ['123456', [Validators.required, Validators.minLength(6)]],
-    dni: ['43447147', [Validators.required, Validators.pattern(this.dniPattern)]],
+    dni: ['1234567', [Validators.required, Validators.pattern(this.dniPattern)]],
     email: ['assa@gmail.com', [Validators.required, Validators.pattern(this.emailPattern)]],
     phoneNum: ['123', ],
     location: ['asdasd', [Validators.required]],

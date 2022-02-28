@@ -9,11 +9,13 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+//Http
+import { HttpClientModule } from "@angular/common/http";
 
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -21,6 +23,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
     //Setup Firebase
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    HttpClientModule
   ],
   providers: [AngularFireAuth],
   bootstrap: [AppComponent]

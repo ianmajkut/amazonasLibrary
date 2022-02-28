@@ -11,7 +11,8 @@ export const environment = {
     authDomain: 'aslibrary-839f9.firebaseapp.com',
     messagingSenderId: '236640498362',
   },
-  production: false
+  production: false,
+  apiKeyBooks: 'AIzaSyBtxERoxhchB1CUv6eg-VET475XXJ8LfvA'
 };
 
 /*

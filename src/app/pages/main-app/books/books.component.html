@@ -1,0 +1,18 @@
+<div class="container">
+          <form class="d-flex mt-3" (ngSubmit)="searchBook()" autocomplete="off" #myForm="ngForm">
+                    <input class="form-control me-2" type="search" placeholder="Search a book!" aria-label="Search" name="search" [(ngModel)]="search" required>  
+                    <button [disabled]="myForm.invalid" type="button" class="btn btn-outline-success" (click)="searchBook()">Search</button>
+          </form>
+          <div class="row mt-5">
+                    <div class="col-sm-3 " *ngFor="let book of books">
+                              <div class="card mb-2" style="width: 18rem;">
+                                        <img src="{{book.thumbnail}}" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                        <h5 class="card-title">{{book.title}}</h5>
+                                        <p class="card-text">{{book.description | slice:0:100 }} ...</p>
+                                        <a href="#" class="btn btn-primary">Check Availability</a>
+                                        </div>
+                              </div>
+                    </div>
+          </div>
+</div>

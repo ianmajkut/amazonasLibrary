@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
      //If the user is not null and the status is verified, navigate to the home page
      if(user && user.user?.emailVerified){
       this.router.navigateByUrl('/home')
-     }//If the user exists but the status is not verified, navigate to the verification page
+     }//If the user ex
      else if(user){
       this.router.navigateByUrl('/auth/verification')
      }
