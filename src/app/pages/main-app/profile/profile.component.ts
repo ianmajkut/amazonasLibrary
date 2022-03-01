@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Observable, tap } from 'rxjs';
 import { Users } from 'src/app/interfaces/interfaces';
 import { SignUpService } from 'src/app/services/sign-up.service';
@@ -25,7 +26,8 @@ export class ProfileComponent implements OnInit {
   //Min length 7 and max length 8
   dniPattern: string = "^[0-9]{7,8}"
 
-  constructor(private activeRoute: ActivatedRoute, public auth: AngularFireAuth, private firestore: AngularFirestore, private fb: FormBuilder, private signUpService : SignUpService ) { 
+  constructor(private activeRoute: ActivatedRoute, public auth: AngularFireAuth, private firestore: AngularFirestore, private fb: FormBuilder, private signUpService : SignUpService, private spinner : NgxSpinnerService ) { 
+    this.spinner.show()
     //Getting the email passed by the url
     this.userEmailParam = this.activeRoute.snapshot.params['userEmail']
     
@@ -42,6 +44,8 @@ export class ProfileComponent implements OnInit {
           //PatchValue allows to change the value of the form with the values of the user
           this.myForm.patchValue(this.myUser)
           this.getBooks()
+          this.spinner.hide()
+          
         })
       }
     })
@@ -49,15 +53,15 @@ export class ProfileComponent implements OnInit {
 
 
   myForm: FormGroup = this.fb.group({
-    name: ['', [Validators.required, Validators.minLength(2)]],
-    lastname: ['', [Validators.required, Validators.minLength(2)]],
+    name: [{value: '', disabled: true}, [Validators.required, Validators.minLength(2)]],
+    lastname: [{value: '', disabled: true}, [Validators.required, Validators.minLength(2)]],
     // The last validator is a asyncValidator  
-    username: ['', [Validators.required, Validators.minLength(5)],[this.signUpService.checkUser.bind(this.signUpService)]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
-    dni: ['', [Validators.required, Validators.pattern(this.dniPattern)]],
-    email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-    phoneNum: ['', ],
-    location: ['', [Validators.required]],
+    username: [{value: '', disabled: true}, [Validators.required, Validators.minLength(5)],[this.signUpService.checkUser.bind(this.signUpService)]],
+    password: [{value: '', disabled: true}, [Validators.required, Validators.minLength(6)]],
+    dni: [{value: '', disabled: true}, [Validators.required, Validators.pattern(this.dniPattern)]],
+    email: [{value: '', disabled: true}, [Validators.required, Validators.pattern(this.emailPattern)]],
+    phoneNum: [{value: '', disabled: true}, ],
+    location: [{value: '', disabled: true}, [Validators.required]],
   })
 
   ngOnInit(): void {

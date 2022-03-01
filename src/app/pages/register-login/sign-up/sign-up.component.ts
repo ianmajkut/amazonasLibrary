@@ -16,6 +16,7 @@ export class SignUpComponent implements OnInit {
   emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"
   //Min length 7 and max length 8
   dniPattern: string = "^[0-9]{7,8}"
+  phoneNumPattern: string = "^[0-9]{8,14}"
 
   textError: string = ''
   dataIsCorrect: boolean = true
@@ -28,7 +29,7 @@ export class SignUpComponent implements OnInit {
     password: ['123456', [Validators.required, Validators.minLength(6)]],
     dni: ['1234567', [Validators.required, Validators.pattern(this.dniPattern)]],
     email: ['assa@gmail.com', [Validators.required, Validators.pattern(this.emailPattern)]],
-    phoneNum: ['123', ],
+    phoneNum: ['12345678', [Validators.pattern(this.phoneNumPattern)] ],
     location: ['asdasd', [Validators.required]],
   })
 

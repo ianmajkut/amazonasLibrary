@@ -1,4 +1,22 @@
 
+.btn-primary {
+          background-color: #358f80;
+          border-color: #358f80;
+          color: #fff;
+}
+
+.btn-primary:hover {
+          background-color: #036666;
+          border-color: #036666;
+          color: #fff;
+}
+
+.btn-primary button:disabled, button[disabled] {
+          background-color: #83c5be;
+          border-color: #ccc;
+          cursor: not-allowed;
+}
+
 @media screen and (max-width: 457px) {
           .actionsContainer {
                     display: flex;

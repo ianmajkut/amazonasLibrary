@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+
 import { environment } from '../environments/environment';
 //Firebase
 import { AngularFireModule } from '@angular/fire/compat';
@@ -12,7 +12,9 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 //Http
 import { HttpClientModule } from "@angular/common/http";
 import { BookDetailsComponent } from './pages/main-app/book-details/book-details.component';
-
+//Spinner
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { BookDetailsComponent } from './pages/main-app/book-details/book-details
     //Setup Firebase
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxSpinnerModule,
+    BrowserAnimationsModule
   ],
   providers: [AngularFireAuth],
   bootstrap: [AppComponent]

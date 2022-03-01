@@ -1,34 +1,36 @@
-<div *ngIf="user | async as user; else loading">
+<div *ngIf="user | async as user">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" routerLink="/home/">
                 <img src="../../../assets/bookLogo.svg" height="50" alt="">            
               Amazonas Library
-    </a>
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" routerLinkActive="active" routerLink="/home/">Home</a>
+            <a class="nav-link active" routerLinkActive="active" routerLink="/home/" [routerLinkActiveOptions]="{exact:true}">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLinkActive="active" [routerLink]="['/home/profile/', currentUser.email ]">Profile</a>
           </li>
         </ul>
-        <span class="navbar-text  ms-3" >
+        <span class="navbar-text -3" >
           <strong> Hi {{currentUser.username}}!!!</strong>
         </span> 
         <button class="btn btn-outline-success ms-3" (click)="logout()" >Logout</button>
       </div>
     </div>
   </nav>
-  <router-outlet ></router-outlet>
+  <div style="background-color: #F8F7FC;">
+    <router-outlet ></router-outlet>
+  </div>
+  
 </div>
-<ng-template #loading>
-  Loading...
-</ng-template>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#248277" type = "ball-spin-clockwise" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
 
 
 

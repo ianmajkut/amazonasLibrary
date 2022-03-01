@@ -1,13 +1,13 @@
 <div class="container-fluid">
-          <div class="d-flex mt-5 justify-content-center">
+          <div class="d-flex pt-5 justify-content-center">
                     <div class="card" style="width: 700px">
                               <div class="card-body">
                                 <h5 class="card-title"> Profile settings</h5>
-                                        <form *ngIf="user | async; else loading" autocomplete="off" [formGroup]="myForm">
+                                        <form *ngIf="user | async" autocomplete="off" [formGroup]="myForm">
                                                   <div class="row align-items-center mt-3">
                                                             <div class="col-12 col-sm-12 col-md-6">
                                                                       <label class="col-form-label">Name</label>
-                                                                      <input type="text" formControlName="name" class="form-control">
+                                                                      <input type="text" formControlName="name" class="form-control" >
                                                                       
                                                             </div>
                                                             <div class="col-12 col-sm-12 col-md-6">
@@ -84,7 +84,5 @@
                 </div>
           </div>
 </div>
-<ng-template #loading>
-        Loading...
-</ng-template>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#248277" type = "ball-spin-clockwise" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
 

@@ -1,5 +1,5 @@
 <div class="container">
-          <form class="d-flex mt-3" (ngSubmit)="searchBook()" autocomplete="off" #myForm="ngForm">
+          <form class="d-flex pt-3" (ngSubmit)="searchBook()" autocomplete="off" #myForm="ngForm">
                     <input class="form-control me-2" type="search" placeholder="Search a book!" aria-label="Search" name="search" [(ngModel)]="search" required>  
                     <button [disabled]="myForm.invalid" type="button" class="btn btn-outline-success" (click)="searchBook()">Search</button>
           </form>

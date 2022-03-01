@@ -11,6 +11,17 @@ import { BooksService } from 'src/app/services/books.service';
       max-height: 300px;
       object-fit: cover;
      }
+     .btn-primary {
+          background-color: #358f80;
+          border-color: #358f80;
+          color: #fff;
+}
+
+      .btn-primary:hover {
+                background-color: #036666;
+                border-color: #036666;
+                color: #fff;
+      }
   `
   ]
 })

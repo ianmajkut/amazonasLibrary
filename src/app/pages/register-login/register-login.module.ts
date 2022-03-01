@@ -7,6 +7,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SendEmailComponent } from './send-email/send-email.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -20,7 +21,8 @@ import { SendEmailComponent } from './send-email/send-email.component';
   imports: [
     CommonModule,
     PagesRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxSpinnerModule
   ]
 })
 export class RegisterLoginModule { }

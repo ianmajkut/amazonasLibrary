@@ -6,6 +6,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { BooksComponent } from './books/books.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -18,7 +19,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     BooksRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgxSpinnerModule,
+    
   ]
 })
 export class BooksModule { }
