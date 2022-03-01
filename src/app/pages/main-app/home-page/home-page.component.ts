@@ -40,5 +40,9 @@ export class HomePageComponent implements OnInit {
     
   }
 
+  logout(){
+    this.auth.signOut();
+  }
+
 
 }

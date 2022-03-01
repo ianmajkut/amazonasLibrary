@@ -13,6 +13,7 @@ export class BookDetailsComponent implements OnInit {
 
   bookID!: string
   actualBook!: any 
+  bookAvailable!: boolean
 
   constructor(private bookService: BooksService, private activeRoute: ActivatedRoute) {
     this.bookID = this.activeRoute.snapshot.params['bookId']
@@ -23,7 +24,7 @@ export class BookDetailsComponent implements OnInit {
           id: data.id,
           isbn: data.volumeInfo?.industryIdentifiers?.filter((data: any) => data.type === 'ISBN_13')[0]?.identifier ,
           description: data.volumeInfo?.description ,
-          thumbnail: data.volumeInfo.imageLinks.smallThumbnail 
+          thumbnail: data.volumeInfo?.imageLinks?.smallThumbnail === undefined ? '../../../../assets/noPhoto.jpg' : data.volumeInfo?.imageLinks?.smallThumbnail,
         }
         this.actualBook = book
         //console.log(this.actualBook);
@@ -32,6 +33,18 @@ export class BookDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  checkBook(){
+    this.bookService.checkAvailability(this.actualBook.id).subscribe(
+      (book) => {
+        console.log('Book Available');
+      }
+    )
+  }
+
+  saveBook(){
+    
   }
 
 }

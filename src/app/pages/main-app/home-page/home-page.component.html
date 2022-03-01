@@ -20,11 +20,11 @@
         <span class="navbar-text  ms-3" >
           <strong> Hi {{currentUser.username}}!!!</strong>
         </span> 
-        <button class="btn btn-outline-success ms-3" >Logout</button>
+        <button class="btn btn-outline-success ms-3" (click)="logout()" >Logout</button>
       </div>
     </div>
   </nav>
-  <router-outlet></router-outlet>
+  <router-outlet ></router-outlet>
 </div>
 <ng-template #loading>
   Loading...

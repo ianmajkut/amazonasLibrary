@@ -1,7 +1,10 @@
 <div class="d-flex align-items-center justify-content-center w-100 h-100">
           <div class=" card text-center mt-5" style="max-width: 600px;">
-                    <img *ngIf="actualBook.thumbnail" src="{{actualBook.thumbnail}}" class="card-img-center" alt="book_thumbnail" style="object-fit: contain; max-width: 600px; max-height: 200px;">
-                    <img *ngIf="!actualBook.thumbnail" src="../../../../assets/noPhoto.jpg" class="card-img-center" alt="book_thumbnail" style="object-fit: contain; max-width: 600px; max-height: 200px;">
+                    <img  src="{{actualBook.thumbnail}}" class="card-img-center" alt="book_thumbnail" style="object-fit: contain; max-width: 600px; max-height: 200px;">
+                    <!-- <ng-template #imgThumbnail>
+                      <img  src="../../../../assets/noPhoto.jpg" class="card-img-center" alt="book_thumbnail" style="object-fit: contain; max-width: 600px; max-height: 200px;">
+                    </ng-template> -->
+                    
                     <div class="card-header">
                       Book Details
                     </div>
@@ -10,7 +13,8 @@
                       <h6 class="card-subtitle mb-2 text-muted">Book ID: {{actualBook.id}}</h6>
                       <h6 class="card-subtitle mb-2 text-muted">Book ISBN: {{actualBook.isbn}}</h6>
                       <p class="card-text"><strong> Book Description:</strong> {{actualBook.description}}</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                      <a class="btn btn-primary" (click)="checkBook()">Go somewhere</a>
+                      <a class="btn btn-primary" (click)="saveBook()">Rent Book</a>
                     </div>
                     
           </div>
