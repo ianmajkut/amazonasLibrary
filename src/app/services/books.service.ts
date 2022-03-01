@@ -40,17 +40,50 @@ export class BooksService {
     return this.http.get<GoogleBookAPI>(`${this.baseUrl}/${id}`)
   }
 
-  checkAvailability(id:string){
-    return this.firestore.collection('librosIngresados', ref => ref.where('id', '==', id ).where('cantPrestados', '<', 3)).valueChanges()
-    
+  async checkAvailability(book: any, user: any){
+    //Check the amouunt of books on the db 'prestamos' collection that have the same id of the book
+    return await this.firestore.collection('prestamos', ref => ref.where('bookId', '==', book.id )).get()
+    .subscribe(res => {
+      console.log(res.size)
+      //If we have 3 books with the same id, the book is not available
+      if(res.size == 3){
+        console.log('No podes reservar este libro');
+      }
+      //If we have less than 3 books with the same id, the book is available
+      if(res.size < 3){
+        console.log('Podes reservar este libro');
+        //Add the book to the db 'prestamos' collection
+        this.rentBook(book, user)
+        //Increase the amount of books with the same id here 
+        let cantPrestados = res.size + 1
+        //Call the updateBook method to update the amount of books with the same id
+        this.bookEntered(book, cantPrestados)
+      }
+    })
   }
 
   async rentBook(book : any, user:any){
-    return await this.firestore.collection('prestamos').doc().set({
+    //Save book on db
+    //Set the information required to save the book on the db
+    await this.firestore.collection('prestamos').doc().set({
       bookId: book.id,
       title: book.title,
       isbn: book.isbn,
-      dniUSer: user.dni
+      dniUSer: user.dni,
+      dayPrestado: new Date().toLocaleDateString(),
+    })
+    return console.log('Book saved');
+  }
+
+  
+  async bookEntered(book: any, cantPrestados: number){
+    //Update the amount of books with the same id
+    await this.firestore.collection('librosIngresados').doc(book.id).set({
+      id: book.id,
+      title: book.title,
+      isbn: book.isbn,
+      cantPrestados: cantPrestados,
     })
   }
+
 }
