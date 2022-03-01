@@ -56,7 +56,7 @@
                               </div>
                     </div>
           </div>
-          <div class="container mt-5 mb-2">
+          <div class="container mt-5 pb-5">
                 <div class="card">
                         <div class="card-body">
                         <h5 class="card-title">Books Rented by {{myUser.username}}</h5>
@@ -68,6 +68,7 @@
                                         <th scope="col">Title</th>
                                         <th scope="col">ISBN</th>
                                         <th scope="col">Day Rented</th>
+                                        <th scope="col"></th>
                                         </tr>
                                         </thead>
                                         <tbody *ngFor="let book of myBooks; let i = index">
@@ -77,6 +78,9 @@
                                         <td>{{book.title}}</td>
                                         <td>{{book.isbn}}</td>
                                         <td>{{book.dayPrestado}}</td>
+                                        <td>
+                                                <button class="btn btn-danger" (click)="alertBook(book)">Return Book</button>
+                                        </td>
                                         </tr>
                                         </tbody>
                                 </table>

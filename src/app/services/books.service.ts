@@ -12,7 +12,8 @@ export class BooksService {
 
   private key: string = environment.apiKeyBooks
   private baseUrl: string = 'https://www.googleapis.com/books/v1/volumes'
-
+  
+  userHasThisBook!: boolean 
   
 
   constructor(private http: HttpClient, private firestore: AngularFirestore) { }
@@ -52,20 +53,40 @@ export class BooksService {
       //If we have less than 3 books with the same id, the book is available
       if(res.size < 3){
         console.log('Podes reservar este libro');
+        let sizePrestamos = res.size 
+        //Check if the user has this book
+        this.checkUserAlreadyHasThisBook(book, user, sizePrestamos)
+      
+      }
+    })
+  }
+
+  
+  async checkUserAlreadyHasThisBook(book: any, user: any, sizePrestamos: number){
+    //Check if the user has already rented this book
+    return await this.firestore.collection('prestamos', ref => ref.where('dniUSer', '==', user.dni ).where('bookId', '==', book.id ))
+    .get()
+    .subscribe(res =>{
+      if(res.size > 0){
+        console.log('This user already has this book');
+      }
+      if(res.size === 0){
+        console.log('This user has not this book');
         //Add the book to the db 'prestamos' collection
         this.rentBook(book, user)
         //Increase the amount of books with the same id here 
-        let cantPrestados = res.size + 1
+        let cantPrestados = sizePrestamos + 1
         //Call the updateBook method to update the amount of books with the same id
         this.bookEntered(book, cantPrestados)
       }
+      
     })
   }
 
   async rentBook(book : any, user:any){
     //Save book on db
     //Set the information required to save the book on the db
-    await this.firestore.collection('prestamos').doc().set({
+    await this.firestore.collection('prestamos').doc(book.id).set({
       bookId: book.id,
       title: book.title,
       isbn: book.isbn,
@@ -84,6 +105,14 @@ export class BooksService {
       isbn: book.isbn,
       cantPrestados: cantPrestados,
     })
+  }
+
+  async deleteBook(book: any){
+    await this.firestore.collection('prestamos', ref => ref.where('bookId', '==', book.bookId).where('dniUSer', '==', book.dniUSer ))
+    .doc(book.bookId).delete()
+    // .doc().delete().then(() => {
+    //   console.log('Book deleted');
+    // })
   }
 
 }

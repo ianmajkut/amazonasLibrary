@@ -6,7 +6,9 @@ import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Observable, tap } from 'rxjs';
 import { Users } from 'src/app/interfaces/interfaces';
+import { BooksService } from 'src/app/services/books.service';
 import { SignUpService } from 'src/app/services/sign-up.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -26,8 +28,9 @@ export class ProfileComponent implements OnInit {
   //Min length 7 and max length 8
   dniPattern: string = "^[0-9]{7,8}"
 
-  constructor(private activeRoute: ActivatedRoute, public auth: AngularFireAuth, private firestore: AngularFirestore, private fb: FormBuilder, private signUpService : SignUpService, private spinner : NgxSpinnerService ) { 
+  constructor(private activeRoute: ActivatedRoute, public auth: AngularFireAuth, private firestore: AngularFirestore, private fb: FormBuilder, private signUpService : SignUpService, private spinner : NgxSpinnerService, private bookService : BooksService) { 
     this.spinner.show()
+    
     //Getting the email passed by the url
     this.userEmailParam = this.activeRoute.snapshot.params['userEmail']
     
@@ -73,9 +76,27 @@ export class ProfileComponent implements OnInit {
       (data) => {
         //console.log(data);
         this.myBooks = data
-        console.log(this.myBooks);
+        //console.log(this.myBooks);
       }
     )
+  }
+
+  alertBook(book: any){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `You are going to return the book ${book.title}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#358f80',
+      confirmButtonText: 'Yes, return it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //console.log(book);
+        
+        this.bookService.deleteBook(book)
+      }
+    })
   }
 
 }

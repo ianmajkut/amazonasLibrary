@@ -44,7 +44,8 @@ export class BookDetailsComponent implements OnInit {
   ngOnInit(): void {
   }
   
-  //Method that handle the book availability, rent the book and
+  //Method that handle the book availability, check if the user 
+  // already rent the book, rent it and
   //upadte the amount of books rented
   saveBook(){
     this.bookService.checkAvailability(this.actualBook, this.currentUser)
