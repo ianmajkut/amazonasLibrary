@@ -56,6 +56,33 @@
                               </div>
                     </div>
           </div>
+          <div class="container mt-5 mb-2">
+                <div class="card">
+                        <div class="card-body">
+                        <h5 class="card-title">Books Rented by {{myUser.username}}</h5>
+                                <table class="table" >
+                                        <thead>
+                                        <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Book Id</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">ISBN</th>
+                                        <th scope="col">Day Rented</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody *ngFor="let book of myBooks; let i = index">
+                                        <tr>
+                                        <th scope="row">{{i}}</th>
+                                        <td>{{book.bookId}}</td>
+                                        <td>{{book.title}}</td>
+                                        <td>{{book.isbn}}</td>
+                                        <td>{{book.dayPrestado}}</td>
+                                        </tr>
+                                        </tbody>
+                                </table>
+                        </div>
+                </div>
+          </div>
 </div>
 <ng-template #loading>
         Loading...

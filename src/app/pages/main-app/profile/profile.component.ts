@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit {
   userEmailParam!: string 
   user! : Observable<any> 
   myUser!: any
+  myBooks: any[] = []
 
   emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"
   //Min length 7 and max length 8
@@ -40,9 +41,8 @@ export class ProfileComponent implements OnInit {
           this.myUser = user[0]
           //PatchValue allows to change the value of the form with the values of the user
           this.myForm.patchValue(this.myUser)
-          
+          this.getBooks()
         })
-
       }
     })
   }
@@ -62,6 +62,16 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     
+  }
+
+  async getBooks(){
+    await this.firestore.collection('prestamos', ref => ref.where('dniUSer', '==', this.myUser.dni)).valueChanges().subscribe(
+      (data) => {
+        //console.log(data);
+        this.myBooks = data
+        console.log(this.myBooks);
+      }
+    )
   }
 
 }
