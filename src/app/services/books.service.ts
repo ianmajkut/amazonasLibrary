@@ -86,7 +86,7 @@ export class BooksService {
   async rentBook(book : any, user:any){
     //Save book on db
     //Set the information required to save the book on the db
-    await this.firestore.collection('prestamos').doc(book.id).set({
+    await this.firestore.collection('prestamos').doc().set({
       bookId: book.id,
       title: book.title,
       isbn: book.isbn,
@@ -109,10 +109,12 @@ export class BooksService {
 
   async deleteBook(book: any){
     await this.firestore.collection('prestamos', ref => ref.where('bookId', '==', book.bookId).where('dniUSer', '==', book.dniUSer ))
-    .doc(book.bookId).delete()
-    // .doc().delete().then(() => {
-    //   console.log('Book deleted');
-    // })
+    .get().subscribe(res => {
+      //Obtain the id of the doc that is an unique id
+      console.log(res.docs[0].id);
+      //Delete the book from the db
+      this.firestore.collection('prestamos').doc(res.docs[0].id).delete()
+    })
   }
 
 }
