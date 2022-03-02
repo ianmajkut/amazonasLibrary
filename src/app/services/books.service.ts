@@ -8,6 +8,7 @@ import { GoogleBookAPI } from '../interfaces/interfaces';
 @Injectable({
   providedIn: 'root'
 })
+
 export class BooksService {
 
   private key: string = environment.apiKeyBooks
@@ -15,6 +16,7 @@ export class BooksService {
   
   userHasThisBook!: boolean 
   
+  librosIngresadosData!: any
 
   constructor(private http: HttpClient, private firestore: AngularFirestore) { }
 
@@ -107,6 +109,34 @@ export class BooksService {
     })
   }
 
+  async updateBookEntered(book: any){
+    //Get the book from the db that has the same id of the book that we want to update
+    await this.firestore.collectionGroup('librosIngresados', ref => ref.where('id', '==', book.bookId)).valueChanges().subscribe(res => {
+      //Set the result to a variable
+      this.librosIngresadosData = res[0]
+      console.log(`Cantidad de libros prestados para este item ${this.librosIngresadosData.cantPrestados}`);
+      //If the amount of books with the same id is more than 1, decrease the amount of books
+        if(this.librosIngresadosData.cantPrestados > 1){
+          console.log('Hay mas de un libro con este id');
+          this.firestore.collection('librosIngresados').doc(book.bookId).update({
+          //We access the amount of books value and decrease it by 1
+          cantPrestados: this.librosIngresadosData.cantPrestados - 1
+        })
+        }
+        //If the amount of books with the same id is 1, delete the book from the db
+        if(this.librosIngresadosData.cantPrestados === 1 ){
+          console.log('Hay menos de un libro con este id');
+          this.firestore.collection('librosIngresados').doc(book.bookId).delete()
+        }
+      }
+    )
+    
+    
+    
+    
+
+  }
+
   async deleteBook(book: any){
     await this.firestore.collection('prestamos', ref => ref.where('bookId', '==', book.bookId).where('dniUSer', '==', book.dniUSer ))
     .get().subscribe(res => {
@@ -114,7 +144,10 @@ export class BooksService {
       console.log(res.docs[0].id);
       //Delete the book from the db
       this.firestore.collection('prestamos').doc(res.docs[0].id).delete()
+      //Call the updateBook method to update the amount of books with the same id
+      this.updateBookEntered(book)
     })
+    
   }
 
 }

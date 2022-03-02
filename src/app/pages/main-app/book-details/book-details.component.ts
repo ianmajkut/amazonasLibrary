@@ -9,6 +9,23 @@ import { BooksService } from 'src/app/services/books.service';
   selector: 'app-book-details',
   templateUrl: './book-details.component.html',
   styles: [
+    `
+    .card img {
+        max-height: 300px;
+        object-fit: cover;
+     }
+     .btn-primary {
+        background-color: #358f80;
+        border-color: #358f80;
+        color: #fff;
+}
+
+      .btn-primary:hover {
+        background-color: #036666;
+        border-color: #036666;
+        color: #fff;
+      }
+    `
   ]
 })
 export class BookDetailsComponent implements OnInit {
@@ -48,7 +65,9 @@ export class BookDetailsComponent implements OnInit {
   // already rent the book, rent it and
   //upadte the amount of books rented
   saveBook(){
+    
     this.bookService.checkAvailability(this.actualBook, this.currentUser)
+    
   }
 
 }
