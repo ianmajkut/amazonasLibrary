@@ -22,6 +22,12 @@ import { BooksService } from 'src/app/services/books.service';
                 border-color: #036666;
                 color: #fff;
       }
+      .card {
+        box-shadow: 12px 12px 5px 0px rgba(212,190,190,0.74);
+        border-radius: 10px;
+      }
+
+      
   `
   ]
 })

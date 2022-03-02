@@ -15,6 +15,24 @@ import Swal from 'sweetalert2';
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styles: [
+    `
+    *{
+      box-sizing: border-box;
+      
+    }
+    .card-table {
+      word-break: break-all;
+    }
+
+    @media (max-width: 466px) {
+      .card-table  {
+        font-size: 0.7rem;
+      }
+      .btn {
+        font-size: 0.7rem;
+      }
+    }
+    `
   ]
 })
 export class ProfileComponent implements OnInit {

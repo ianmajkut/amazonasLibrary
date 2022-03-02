@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { GoogleBookAPI } from 'src/app/interfaces/interfaces';
 import { BooksService } from 'src/app/services/books.service';
 
+
 @Component({
   selector: 'app-book-details',
   templateUrl: './book-details.component.html',

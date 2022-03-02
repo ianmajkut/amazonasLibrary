@@ -24,6 +24,16 @@ import { Component, OnInit } from '@angular/core';
               object-fit: cover;
     }
 
+    @media screen and (max-width: 650px) {
+      .col-img {
+        display: none;
+      }
+      
+      .col-main {
+        width: 100%;
+      }
+    }
+
   `
   ]
 })

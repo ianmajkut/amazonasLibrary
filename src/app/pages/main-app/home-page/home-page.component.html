@@ -1,5 +1,5 @@
 <div *ngIf="user | async as user">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background: #dee2e6 !important;">
     <div class="container-fluid">
       <a class="navbar-brand" routerLink="/home/">
                 <img src="../../../assets/bookLogo.svg" height="50" alt="">            
@@ -20,11 +20,11 @@
         <span class="navbar-text -3" >
           <strong> Hi {{currentUser.username}}!!!</strong>
         </span> 
-        <button class="btn btn-outline-success ms-3" (click)="logout()" >Logout</button>
+        <button class="btn btn-success ms-3" (click)="logout()" >Logout</button>
       </div>
     </div>
   </nav>
-  <div style="background-color: #F8F7FC;">
+  <div>
     <router-outlet ></router-outlet>
   </div>
   

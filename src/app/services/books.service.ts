@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { GoogleBookAPI } from '../interfaces/interfaces';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +52,11 @@ export class BooksService {
       //If we have 3 books with the same id, the book is not available
       if(res.size == 3){
         console.log('No podes reservar este libro');
+        Swal.fire({
+          icon: 'error',
+          title: 'You cannot reserve this book',
+          text: 'We are sorry but the book is at the maximum amount of 3 reservations',
+        })
       }
       //If we have less than 3 books with the same id, the book is available
       if(res.size < 3){
@@ -70,7 +76,11 @@ export class BooksService {
     .get()
     .subscribe(res =>{
       if(res.size > 0){
-        console.log('This user already has this book');
+        Swal.fire({
+          icon: 'error',
+          title: 'You already have this book',
+          text: 'You already have this book so read it and return it to the library to get a new one please :)', 
+        })
       }
       if(res.size === 0){
         console.log('This user has not this book');
@@ -94,6 +104,12 @@ export class BooksService {
       isbn: book.isbn,
       dniUSer: user.dni,
       dayPrestado: new Date().toLocaleDateString(),
+    })
+    Swal.fire({
+      icon: 'success',
+      title: 'Book rented successfully :)',
+      showConfirmButton: false,
+      timer: 2000
     })
     return console.log('Book saved');
   }
@@ -144,6 +160,12 @@ export class BooksService {
       console.log(res.docs[0].id);
       //Delete the book from the db
       this.firestore.collection('prestamos').doc(res.docs[0].id).delete()
+      Swal.fire({
+        icon: 'success',
+        title: 'Thank you for returning the book, we hope you enjoyed it :)',
+        showConfirmButton: false,
+        timer: 2000
+      })
       //Call the updateBook method to update the amount of books with the same id
       this.updateBookEntered(book)
     })
