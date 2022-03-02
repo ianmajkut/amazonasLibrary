@@ -21,20 +21,22 @@ export class BooksService {
 
   constructor(private http: HttpClient, private firestore: AngularFirestore) { }
 
-  getHomeBooksTemplate() : Observable<GoogleBookAPI>
+  getHomeBooksTemplate(index:number) : Observable<GoogleBookAPI>
   {
     const params = new HttpParams()
                   .set('q', 'star wars')
                   .set('maxResults', '40')
+                  .set('startIndex', index)
                   .set('key', this.key )
 
     return this.http.get<GoogleBookAPI>(`${this.baseUrl}`, {params})
   }
 
-  searchBook(param: string): Observable<GoogleBookAPI>{
+  searchBook(param: string, index:number): Observable<GoogleBookAPI>{
     const params = new HttpParams()
                   .set('q', param)
-                  .set('maxResults', '10')
+                  .set('maxResults', '40')
+                  .set('startIndex', index)
                   .set('key', this.key )
 
     return this.http.get<GoogleBookAPI>(`${this.baseUrl}`, {params})
@@ -48,10 +50,10 @@ export class BooksService {
     //Check the amouunt of books on the db 'prestamos' collection that have the same id of the book
     return await this.firestore.collection('prestamos', ref => ref.where('bookId', '==', book.id )).get()
     .subscribe(res => {
-      console.log(res.size)
+      //console.log(res.size)
       //If we have 3 books with the same id, the book is not available
       if(res.size == 3){
-        console.log('No podes reservar este libro');
+        //console.log('No podes reservar este libro');
         Swal.fire({
           icon: 'error',
           title: 'You cannot reserve this book',
@@ -60,7 +62,7 @@ export class BooksService {
       }
       //If we have less than 3 books with the same id, the book is available
       if(res.size < 3){
-        console.log('Podes reservar este libro');
+        //console.log('Podes reservar este libro');
         let sizePrestamos = res.size 
         //Check if the user has this book
         this.checkUserAlreadyHasThisBook(book, user, sizePrestamos)
@@ -83,7 +85,7 @@ export class BooksService {
         })
       }
       if(res.size === 0){
-        console.log('This user has not this book');
+        //console.log('This user has not this book');
         //Add the book to the db 'prestamos' collection
         this.rentBook(book, user)
         //Increase the amount of books with the same id here 
@@ -127,24 +129,32 @@ export class BooksService {
 
   async updateBookEntered(book: any){
     //Get the book from the db that has the same id of the book that we want to update
-    await this.firestore.collectionGroup('librosIngresados', ref => ref.where('id', '==', book.bookId)).valueChanges().subscribe(res => {
+    await this.firestore.collectionGroup('librosIngresados', ref => ref.where('id', '==', book.bookId)).get().subscribe(res => {
       //Set the result to a variable
-      this.librosIngresadosData = res[0]
-      console.log(`Cantidad de libros prestados para este item ${this.librosIngresadosData.cantPrestados}`);
+      this.librosIngresadosData = res.docs[0].data()
+      //console.log(res.docs[0].data());
+
+      //console.log(`Cantidad de libros prestados para este item ${this.librosIngresadosData.cantPrestados}`);
+      
       //If the amount of books with the same id is more than 1, decrease the amount of books
         if(this.librosIngresadosData.cantPrestados > 1){
-          console.log('Hay mas de un libro con este id');
+          //console.log('Hay mas de un libro con este id');
           this.firestore.collection('librosIngresados').doc(book.bookId).update({
           //We access the amount of books value and decrease it by 1
           cantPrestados: this.librosIngresadosData.cantPrestados - 1
-        })
+          })
+          
+          
         }
         //If the amount of books with the same id is 1, delete the book from the db
-        if(this.librosIngresadosData.cantPrestados === 1 ){
-          console.log('Hay menos de un libro con este id');
+        if(this.librosIngresadosData.cantPrestados == 1 ){
+          //console.log('Hay solo un libro con este id');
           this.firestore.collection('librosIngresados').doc(book.bookId).delete()
+          
         }
+        
       }
+      
     )
     
     
@@ -157,7 +167,7 @@ export class BooksService {
     await this.firestore.collection('prestamos', ref => ref.where('bookId', '==', book.bookId).where('dniUSer', '==', book.dniUSer ))
     .get().subscribe(res => {
       //Obtain the id of the doc that is an unique id
-      console.log(res.docs[0].id);
+      //console.log(res.docs[0].id);
       //Delete the book from the db
       this.firestore.collection('prestamos').doc(res.docs[0].id).delete()
       Swal.fire({

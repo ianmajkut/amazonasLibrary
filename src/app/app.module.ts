@@ -29,7 +29,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
     AngularFirestoreModule,
     HttpClientModule,
     NgxSpinnerModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [AngularFireAuth],
   bootstrap: [AppComponent]

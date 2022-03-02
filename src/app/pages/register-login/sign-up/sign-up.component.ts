@@ -27,7 +27,7 @@ export class SignUpComponent implements OnInit {
     // The last validator is a asyncValidator  
     username: ['', [Validators.required, Validators.minLength(5)],[this.signUpService.checkUser.bind(this.signUpService)]],
     password: ['123456', [Validators.required, Validators.minLength(6)]],
-    dni: ['1234567', [Validators.required, Validators.pattern(this.dniPattern)]],
+    dni: ['', [Validators.required, Validators.pattern(this.dniPattern)], [this.signUpService.checkDNI.bind(this.signUpService)]],
     email: ['assa@gmail.com', [Validators.required, Validators.pattern(this.emailPattern)]],
     phoneNum: ['12345678', [Validators.pattern(this.phoneNumPattern)] ],
     location: ['asdasd', [Validators.required]],
@@ -36,6 +36,10 @@ export class SignUpComponent implements OnInit {
   //Getter to access the username field and check the status
   get username() {
     return this.myForm.get('username')
+  }
+  //Getter to access the dni field and check the status
+  get dni() {
+    return this.myForm.get('dni')
   }
 
   constructor(private fb: FormBuilder, private userService: UserService, private firestore: AngularFirestore, private signUpService: SignUpService, private router: Router) { }
@@ -63,7 +67,7 @@ export class SignUpComponent implements OnInit {
       this.dataIsCorrect = false
       this.textError = err.message
     });
-    console.log(this.myForm);
+    //console.log(this.myForm);
   }
 
 }

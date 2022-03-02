@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { GoogleBookAPI } from 'src/app/interfaces/interfaces';
 import { BooksService } from 'src/app/services/books.service';
 
@@ -12,8 +13,8 @@ import { BooksService } from 'src/app/services/books.service';
       object-fit: cover;
      }
      .btn-primary {
-          background-color: #358f80;
-          border-color: #358f80;
+          background-color: #4AB8A1;
+          border-color: #4AB8A1;
           color: #fff;
 }
 
@@ -25,6 +26,11 @@ import { BooksService } from 'src/app/services/books.service';
       .card {
         box-shadow: 12px 12px 5px 0px rgba(212,190,190,0.74);
         border-radius: 10px;
+        transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+      }
+
+      .card:hover {
+        transform: scale(1.05);
       }
 
       
@@ -34,6 +40,11 @@ import { BooksService } from 'src/app/services/books.service';
 export class BooksComponent implements OnInit {
 
   books: any = new Array<GoogleBookAPI>()
+  
+  index: number = 0
+  searchSpecificBook: boolean = false
+
+  indexSearch: number = 0
 
   //Search 'txtSearch' reference in the html and assign it to the inputText variable
   //@ViewChild('txtSearch') inputText!: ElementRef<HTMLInputElement>
@@ -43,8 +54,15 @@ export class BooksComponent implements OnInit {
 
   //PROBLEM: ISSBN IS NOT PRESENT OF CERTAINS BOOKS
 
-  constructor(private bookService: BooksService) { 
-    this.bookService.getHomeBooksTemplate().subscribe(
+  constructor(private bookService: BooksService, private spinner : NgxSpinnerService) { 
+    
+    this.getDefaultBooks()
+    
+  }
+
+  getDefaultBooks(){
+    this.spinner.show()
+    this.bookService.getHomeBooksTemplate(this.index).subscribe(
       (data) => {
         data.items.forEach((item: any, index: number) => {
           let book : any  = {
@@ -56,20 +74,19 @@ export class BooksComponent implements OnInit {
           }
           //console.log(book);
           this.books.push(book)
-          
+          this.spinner.hide()
         })
       }
     )
-    
   }
 
   ngOnInit(): void {
   }
 
   searchBook(){
-    const searchValue = this.search
-    
-    this.bookService.searchBook(searchValue).subscribe(
+    this.searchSpecificBook = true
+    this.spinner.show()
+    this.bookService.searchBook(this.search, this.indexSearch).subscribe(
       (data) => {
         this.books = []
         //console.log(data);
@@ -82,16 +99,64 @@ export class BooksComponent implements OnInit {
             thumbnail: item.volumeInfo.imageLinks?.smallThumbnail  
           }
           this.books.push(book)
-          
+          this.spinner.hide()
         })
       }
     )
   }
 
-  index(book: GoogleBookAPI){
-    console.log(book);
+  reset(){
+    this.books = []
+    this.getDefaultBooks()
   }
 
+  onScroll(){
+    
+    this.spinner.show()
+    setTimeout(() => {
+      this.spinner.hide()
+      if(this.searchSpecificBook == false){
+        this.bookService.getHomeBooksTemplate((this.index)+21).subscribe(
+            (data) => {
+              data.items.forEach((item: any, index: number) => {
+                let book : any  = {
+                  title: item.volumeInfo.title,
+                  id: item.id,
+                  isbn: item.volumeInfo.industryIdentifiers?.filter((item: any) => item.type === 'ISBN_13')[0]?.identifier,
+                  description: item.volumeInfo.description ,
+                  thumbnail: item.volumeInfo.imageLinks?.smallThumbnail  
+                }
+                //console.log(book);
+                this.books.push(book)
+                
+              })
+            }
+          )
+        }
+      if(this.searchSpecificBook == true){
+        this.bookService.searchBook(this.search, (this.indexSearch)+21).subscribe(
+          (data) => {
+            
+            //console.log(data);
+            data.items.forEach((item: any, index: number) => {
+              let book : any  = {
+                title: item.volumeInfo.title,
+                id: item.id,
+                isbn: item.volumeInfo.industryIdentifiers?.filter((item: any) => item.type === 'ISBN_13')[0]?.identifier,
+                description: item.volumeInfo.description ,
+                thumbnail: item.volumeInfo.imageLinks?.smallThumbnail  
+              }
+              this.books.push(book)
+              
+            })
+          }
+        )
+      }
+    }, 3000);
+    
+  }
+
+  
   
 
   

@@ -2,13 +2,14 @@
           <form class="d-flex pt-3" (ngSubmit)="searchBook()" autocomplete="off" #myForm="ngForm">
                     <input class="form-control me-2" type="search" placeholder="Search a book!" aria-label="Search" name="search" [(ngModel)]="search" required>  
                     <button [disabled]="myForm.invalid" type="button" class="btn btn-outline-success" (click)="searchBook()">Search</button>
+                    <button type="button" class="btn btn-success ms-1" (click)="reset()">Reset </button>
           </form>
           <div class="row mt-5">
                     <div class="col-sm-12 col-xxl-3 col-xl-4 col-lg-4 col-md-6" *ngFor="let book of books; let i = index ">
                               <div class="card mb-4" style="width: 18rem; height: 600px;">
                                         <img *ngIf="book.thumbnail" src="{{book.thumbnail}}" class="card-img" alt="...">
                                         <img *ngIf="!book.thumbnail" src="../../../../assets/noPhoto.jpg" class="card-img-top" alt="...">
-                                        <div class="card-body d-flex flex-column">
+                                        <div class="card-body d-flex flex-column" style="background-color: #ff5900; color: white;">
                                         <h5 class="card-title">{{book.title}}</h5>
                                         <p class="card-text">{{book.description | slice:0:100 }} ...</p>
                                         <a class="btn btn-primary mt-auto" [routerLink]="['/home/', book.id ]">Get Info</a>
@@ -17,7 +18,8 @@
                               </div>
                               
                     </div>
-                    
+                    <div class="search-results" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()"></div>
+                    <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#248277" type = "ball-spin-clockwise" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
           </div>
 </div>
 

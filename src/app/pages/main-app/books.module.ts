@@ -7,6 +7,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { BooksComponent } from './books/books.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
 @NgModule({
@@ -21,7 +22,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ReactiveFormsModule,
     FormsModule,
     NgxSpinnerModule,
-    
+    InfiniteScrollModule
   ]
 })
 export class BooksModule { }

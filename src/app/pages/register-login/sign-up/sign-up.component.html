@@ -46,6 +46,8 @@ align-items-center py-5">
                                                                       <input type="number" min="0" formControlName="dni" class="form-control">
                                                                       <span *ngIf="myForm.controls['dni'].errors?.['required'] && myForm.controls['dni'].touched" class="form-text text-danger" >The DNI is required</span>
                                                                       <span *ngIf="myForm.controls['dni'].errors?.['pattern'] && myForm.controls['dni'].touched" class="form-text text-danger" >Invalid DNI format</span>
+                                                                      <span *ngIf="myForm.controls['dni'].errors?.['dniNoAvailable']" class="form-text text-danger" >This DNI already exists on this app</span>
+                                                                      <span *ngIf="dni?.pending" class="form-text text-muted" >Checking availability of <strong>{{ dni?.value }}</strong></span>
                                                             </div>
                                                             <div class="col-12 col-sm-12 col-md-6">
                                                                       <label class="col-form-label">Email</label>

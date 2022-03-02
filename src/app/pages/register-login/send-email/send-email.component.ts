@@ -34,9 +34,9 @@ export class SendEmailComponent implements OnInit {
 
   //Check if user is verified to prevent sending verification email again
   ngOnInit(): void {
-    console.log(this.auth.authState.subscribe(user => {
+    this.auth.authState.subscribe(user => {
       this.isEmailVerified = user?.emailVerified
-    }));
+    });
   }
 
   onSendEmail(){

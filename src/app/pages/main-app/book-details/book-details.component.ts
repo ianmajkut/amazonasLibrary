@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { GoogleBookAPI } from 'src/app/interfaces/interfaces';
 import { BooksService } from 'src/app/services/books.service';
 
@@ -26,6 +27,17 @@ import { BooksService } from 'src/app/services/books.service';
         border-color: #036666;
         color: #fff;
       }
+
+      .card {
+        box-shadow: 12px 12px 5px 0px rgba(212,190,190,0.74);
+        border-radius: 10px;
+        transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+      }
+
+      .card:hover {
+        transform: scale(1.05);
+      }
+
     `
   ]
 })
@@ -36,7 +48,8 @@ export class BookDetailsComponent implements OnInit {
   bookAvailable!: boolean
   currentUser!: any
 
-  constructor(private bookService: BooksService, private activeRoute: ActivatedRoute, private auth : AngularFireAuth, private firestore: AngularFirestore) {
+  constructor(private bookService: BooksService, private activeRoute: ActivatedRoute, private auth : AngularFireAuth, private firestore: AngularFirestore, private spinner : NgxSpinnerService) {
+    this.spinner.show()
     this.bookID = this.activeRoute.snapshot.params['bookId']
     this.bookService.seachBookById(this.bookID).subscribe(
       (data) => {
@@ -48,15 +61,18 @@ export class BookDetailsComponent implements OnInit {
           thumbnail: data.volumeInfo?.imageLinks?.smallThumbnail === undefined ? '../../../../assets/noPhoto.jpg' : data.volumeInfo?.imageLinks?.smallThumbnail,
         }
         this.actualBook = book
+        this.spinner.hide() 
         //console.log(this.actualBook);
       }
     )
     this.auth.user.subscribe(user => {
       this.firestore.collection('users', ref => ref.where('email', '==', user?.email)).valueChanges().subscribe(user => {
           //Asign the user to the currentUser variable
-          this.currentUser=user[0] 
+          this.currentUser=user[0]
+          
         })
     })
+    
   }
 
   ngOnInit(): void {

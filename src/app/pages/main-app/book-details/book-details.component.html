@@ -8,17 +8,17 @@
                     <div class="card-header" style="background-color: #67b99a; color: #fff; font-weight: bold;">
                       Book Details
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="background-color: #ff5900; color: white;">
                       <h4 class="card-title">{{actualBook.title}}</h4>
-                      <h6 class="card-subtitle mb-2 text-muted">Book ID: {{actualBook.id}}</h6>
-                      <h6 class="card-subtitle mb-2 text-muted">Book ISBN: {{actualBook.isbn}}</h6>
+                      <h6 class="card-subtitle mb-2 ">Book ID: {{actualBook.id}}</h6>
+                      <h6 class="card-subtitle mb-2 ">Book ISBN: {{actualBook.isbn}}</h6>
                       <p class="card-text"><strong> Book Description:</strong> {{actualBook.description}}</p>
                       <div class="d-flex justify-content-evenly">
                         <a class="btn btn-primary" (click)="saveBook()">Rent Book</a>
                       </div>
                     </div>
                       
-                    
+                    <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#248277" type = "ball-spin-clockwise" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
           </div>
 </div>
 

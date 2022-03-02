@@ -24,5 +24,14 @@ export class SignUpService {
     )
   }
 
+  checkDNI(control: AbstractControl)  {
+    const dni : number = control.value
+    return this.firestore.collection('users', ref => ref.where('dni', '==', dni.toString() )).valueChanges().pipe(
+      debounceTime(500),
+      take(1),
+      map(arr=> arr.length ? {dniNoAvailable: true} : null)
+    )
+  }
+
 
 }
