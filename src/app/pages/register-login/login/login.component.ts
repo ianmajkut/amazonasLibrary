@@ -9,45 +9,43 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  
-  textError: string = ''
-  dataIsCorrect: boolean = true
+  textError: string = '';
+  dataIsCorrect: boolean = true;
 
-  emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"
+  emailPattern: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
 
   myForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-    password: ['', Validators.required],
+    password: ['', Validators.required]
+  });
 
-  })
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private userService: UserService
+  ) {}
 
-  constructor(private fb: FormBuilder, private router: Router, private userService: UserService) { }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-  }
-
-  async login(){
-    const {email, password} = this.myForm.value
-    try{
+  async login() {
+    const { email, password } = this.myForm.value;
+    try {
       //Pass the email and password to the userService.login() method
-     const user = await this.userService.login(email, password)
-     //If the user is not null and the status is verified, navigate to the home page
-     if(user && user.user?.emailVerified){
-      this.router.navigateByUrl('/home')
-     }//If the user ex
-     else if(user){
-      this.router.navigateByUrl('/auth/verification')
-     }
+      const user = await this.userService.login(email, password);
+      //If the user is not null and the status is verified, navigate to the home page
+      if (user && user.user?.emailVerified) {
+        this.router.navigateByUrl('/home');
+      } //If the user ex
+      else if (user) {
+        this.router.navigateByUrl('/auth/verification');
+      }
+    } catch (error: any) {
+      this.dataIsCorrect = false;
+      this.textError = error.message;
     }
-    catch(error: any){
-      this.dataIsCorrect = false
-      this.textError = error.message
-    }
-    
   }
 
-  signUp(){
+  signUp() {
     this.router.navigateByUrl('/auth/signup');
   }
-
 }

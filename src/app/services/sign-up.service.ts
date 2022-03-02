@@ -10,28 +10,33 @@ import { UserService } from './user.service';
   providedIn: 'root'
 })
 export class SignUpService {
-
-  constructor(private firestore: AngularFirestore, private afAuth: AngularFireAuth) { 
-  }
+  constructor(
+    private firestore: AngularFirestore,
+    private afAuth: AngularFireAuth
+  ) {}
 
   // Async validator to check if the username is available or not with a debounce time of 500ms
-  checkUser(control: AbstractControl)  {
-    const username : string = control.value
-    return this.firestore.collection('users', ref => ref.where('username', '==', username )).valueChanges().pipe(
-      debounceTime(500),
-      take(1),
-      map(arr=> arr.length ? {usernameNoAvailable: true} : null)
-    )
+  checkUser(control: AbstractControl) {
+    const username: string = control.value;
+    return this.firestore
+      .collection('users', (ref) => ref.where('username', '==', username))
+      .valueChanges()
+      .pipe(
+        debounceTime(500),
+        take(1),
+        map((arr) => (arr.length ? { usernameNoAvailable: true } : null))
+      );
   }
 
-  checkDNI(control: AbstractControl)  {
-    const dni : number = control.value
-    return this.firestore.collection('users', ref => ref.where('dni', '==', dni.toString() )).valueChanges().pipe(
-      debounceTime(500),
-      take(1),
-      map(arr=> arr.length ? {dniNoAvailable: true} : null)
-    )
+  checkDNI(control: AbstractControl) {
+    const dni: number = control.value;
+    return this.firestore
+      .collection('users', (ref) => ref.where('dni', '==', dni.toString()))
+      .valueChanges()
+      .pipe(
+        debounceTime(500),
+        take(1),
+        map((arr) => (arr.length ? { dniNoAvailable: true } : null))
+      );
   }
-
-
 }

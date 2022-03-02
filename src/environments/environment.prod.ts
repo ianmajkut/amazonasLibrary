@@ -5,7 +5,7 @@ export const environment = {
     storageBucket: 'aslibrary-839f9.appspot.com',
     apiKey: 'AIzaSyDFXBNldKtlWHkDZ9VX1wMP_vfOiD-i520',
     authDomain: 'aslibrary-839f9.firebaseapp.com',
-    messagingSenderId: '236640498362',
+    messagingSenderId: '236640498362'
   },
   production: true,
   apiKeyBooks: 'AIzaSyBtxERoxhchB1CUv6eg-VET475XXJ8LfvA'

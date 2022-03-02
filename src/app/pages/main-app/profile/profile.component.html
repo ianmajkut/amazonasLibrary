@@ -1,103 +1,131 @@
 <div class="d-flex flex-column">
-          <div class="d-flex pt-5 justify-content-center">
-                    <div class="card" style="width: 700px">
-                              <div class="card-body">
-                                <h5 class="card-title"> Profile settings <img src="https://img.icons8.com/stickers/30/000000/settings.png"/></h5>
-                                        <form *ngIf="user | async" autocomplete="off" [formGroup]="myForm">
-                                                  <div class="row align-items-center mt-3">
-                                                            <div class="col-12 col-sm-12 col-md-6">
-                                                                      <label class="col-form-label">Name</label>
-                                                                      <input type="text" formControlName="name" class="form-control" >
-                                                                      
-                                                            </div>
-                                                            <div class="col-12 col-sm-12 col-md-6">
-                                                                      <label class="col-form-label">Lastname</label>
-                                                                      <input type="text" formControlName="lastname" class="form-control ">
-                                                                      
-                                                            </div>
-                                                            
-                                                  </div>
-                                                  <div class="row align-items-center mt-3">
-                                                            <div class="col-12 col-sm-12 col-md-12">
-                                                                      <label class="col-form-label">Username</label>
-                                                                      <input type="text" formControlName="username" class="form-control">
-                                                                      
-                                                            </div>
-                                                            
-                                                            
-                                                  </div>
-                                                  <div class="row align-items-center mt-3">
-                                                            <div class="col-12 col-sm-12 col-md-6">
-                                                                      <label class="col-form-label">DNI</label>
-                                                                      <input type="number" min="0" formControlName="dni" class="form-control">
-                                                                     
-                                                            </div>
-                                                            <div class="col-12 col-sm-12 col-md-6">
-                                                                      <label class="col-form-label">Email</label>
-                                                                      <input type="email" formControlName="email" class="form-control ">
-                                                                      
-                                                            </div>  
-                                                  </div>
-                                                  <div class="row align-items-center mt-3">
-                                                            <div class="col-12 col-sm-12 col-md-6">
-                                                                      <label class="col-form-label">Phone Number</label>
-                                                                      <input type="number" min="0" formControlName="phoneNum" class="form-control">
-                                                                      
-                                                            </div>
-                                                            <div class="col-12 col-sm-12 col-md-6">
-                                                                      <label class="col-form-label">Location</label>
-                                                                      <input type="text" formControlName="location" class="form-control ">
-                                                                      
-                                                            </div>
-                                                  </div>
-                                        </form> 
-                              
-                                
-                              </div>
-                    </div>
+  <div class="d-flex pt-5 justify-content-center">
+    <div class="card" style="width: 700px">
+      <div class="card-body">
+        <h5 class="card-title">
+          Profile settings
+          <img src="https://img.icons8.com/stickers/30/000000/settings.png" />
+        </h5>
+        <form *ngIf="user | async" autocomplete="off" [formGroup]="myForm">
+          <div class="row align-items-center mt-3">
+            <div class="col-12 col-sm-12 col-md-6">
+              <label class="col-form-label">Name</label>
+              <input type="text" formControlName="name" class="form-control" />
+            </div>
+            <div class="col-12 col-sm-12 col-md-6">
+              <label class="col-form-label">Lastname</label>
+              <input
+                type="text"
+                formControlName="lastname"
+                class="form-control"
+              />
+            </div>
           </div>
-          <div class="container mt-5 pb-5">
-                <div *ngIf="myBooks.length > 0; else emptyList" class="card">
-                        <div class="card-body">
-                        <h5 class="card-title">Books Rented by {{myUser.username}} <img src="https://img.icons8.com/stickers/30/000000/books.png"/></h5>
-                        <div class="card-text card-table">
-                                <table class="table" >
-                                        <thead>
-                                        <tr>
-                                        <th scope="col">Book Id</th>
-                                        <th scope="col">Title</th>
-                                        <th scope="col">ISBN</th>
-                                        <th scope="col">Day Rented</th>
-                                        <th scope="col"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody *ngFor="let book of myBooks">
-                                        <tr>
-                                        <td>{{book.bookId}}</td>
-                                        <td>{{book.title}}</td>
-                                        <td>{{book.isbn}}</td>
-                                        <td>{{book.dayPrestado}}</td>
-                                        <td>
-                                                <button class="btn btn-danger" (click)="alertBook(book)">Return Book</button>
-                                        </td>
-                                        </tr>
-                                        </tbody>
-                                </table>
-                        </div>
-                        </div>
-                </div>
-                <ng-template #emptyList>
-                        <div class="container text-center">
-                                <h2>
-                                        You don't have any rented books <br>
-                                        <img src="https://img.icons8.com/stickers/100/000000/nothing-found.png"/>
-                                </h2>
-                                <h3>
-                                        Return to the home page to rent a book
-                                </h3>
-                        </div>
-                </ng-template>
+          <div class="row align-items-center mt-3">
+            <div class="col-12 col-sm-12 col-md-12">
+              <label class="col-form-label">Username</label>
+              <input
+                type="text"
+                formControlName="username"
+                class="form-control"
+              />
+            </div>
           </div>
+          <div class="row align-items-center mt-3">
+            <div class="col-12 col-sm-12 col-md-6">
+              <label class="col-form-label">DNI</label>
+              <input
+                type="number"
+                min="0"
+                formControlName="dni"
+                class="form-control"
+              />
+            </div>
+            <div class="col-12 col-sm-12 col-md-6">
+              <label class="col-form-label">Email</label>
+              <input
+                type="email"
+                formControlName="email"
+                class="form-control"
+              />
+            </div>
+          </div>
+          <div class="row align-items-center mt-3">
+            <div class="col-12 col-sm-12 col-md-6">
+              <label class="col-form-label">Phone Number</label>
+              <input
+                type="number"
+                min="0"
+                formControlName="phoneNum"
+                class="form-control"
+              />
+            </div>
+            <div class="col-12 col-sm-12 col-md-6">
+              <label class="col-form-label">Location</label>
+              <input
+                type="text"
+                formControlName="location"
+                class="form-control"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-5 pb-5">
+    <div *ngIf="myBooks.length > 0; else emptyList" class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+          Books Rented by {{ myUser.username }}
+          <img src="https://img.icons8.com/stickers/30/000000/books.png" />
+        </h5>
+        <div class="card-text card-table">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Book Id</th>
+                <th scope="col">Title</th>
+                <th scope="col">ISBN</th>
+                <th scope="col">Day Rented</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let book of myBooks">
+              <tr>
+                <td>{{ book.bookId }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.isbn }}</td>
+                <td>{{ book.dayPrestado }}</td>
+                <td>
+                  <button class="btn btn-danger" (click)="alertBook(book)">
+                    Return Book
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <ng-template #emptyList>
+      <div class="container text-center">
+        <h2>
+          You don't have any rented books <br />
+          <img
+            src="https://img.icons8.com/stickers/100/000000/nothing-found.png"
+          />
+        </h2>
+        <h3>Return to the home page to rent a book</h3>
+      </div>
+    </ng-template>
+  </div>
 </div>
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#248277" type = "ball-spin-clockwise" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
-
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="large"
+  color="#248277"
+  type="ball-spin-clockwise"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>

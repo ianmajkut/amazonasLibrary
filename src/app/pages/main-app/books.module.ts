@@ -9,13 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
-
 @NgModule({
-  declarations: [
-    ProfileComponent,
-    HomePageComponent,
-    BooksComponent,
-  ],
+  declarations: [ProfileComponent, HomePageComponent, BooksComponent],
   imports: [
     CommonModule,
     BooksRoutingModule,
@@ -25,4 +20,4 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     InfiniteScrollModule
   ]
 })
-export class BooksModule { }
+export class BooksModule {}

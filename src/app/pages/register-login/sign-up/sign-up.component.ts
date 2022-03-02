@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UserService } from 'src/app/services/user.service';
 import { Users } from 'src/app/interfaces/interfaces';
@@ -12,63 +17,88 @@ import { Router } from '@angular/router';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-
-  emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"
+  emailPattern: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   //Min length 7 and max length 8
-  dniPattern: string = "^[0-9]{7,8}"
-  phoneNumPattern: string = "^[0-9]{8,14}"
+  dniPattern: string = '^[0-9]{7,8}';
+  phoneNumPattern: string = '^[0-9]{8,14}';
 
-  textError: string = ''
-  dataIsCorrect: boolean = true
+  textError: string = '';
+  dataIsCorrect: boolean = true;
 
   myForm: FormGroup = this.fb.group({
     name: ['nombre', [Validators.required, Validators.minLength(2)]],
     lastname: ['apel', [Validators.required, Validators.minLength(2)]],
-    // The last validator is a asyncValidator  
-    username: ['', [Validators.required, Validators.minLength(5)],[this.signUpService.checkUser.bind(this.signUpService)]],
+    // The last validator is a asyncValidator
+    username: [
+      '',
+      [Validators.required, Validators.minLength(5)],
+      [this.signUpService.checkUser.bind(this.signUpService)]
+    ],
     password: ['123456', [Validators.required, Validators.minLength(6)]],
-    dni: ['', [Validators.required, Validators.pattern(this.dniPattern)], [this.signUpService.checkDNI.bind(this.signUpService)]],
-    email: ['assa@gmail.com', [Validators.required, Validators.pattern(this.emailPattern)]],
-    phoneNum: ['12345678', [Validators.pattern(this.phoneNumPattern)] ],
-    location: ['asdasd', [Validators.required]],
-  })
+    dni: [
+      '',
+      [Validators.required, Validators.pattern(this.dniPattern)],
+      [this.signUpService.checkDNI.bind(this.signUpService)]
+    ],
+    email: [
+      'assa@gmail.com',
+      [Validators.required, Validators.pattern(this.emailPattern)]
+    ],
+    phoneNum: ['12345678', [Validators.pattern(this.phoneNumPattern)]],
+    location: ['asdasd', [Validators.required]]
+  });
 
   //Getter to access the username field and check the status
   get username() {
-    return this.myForm.get('username')
+    return this.myForm.get('username');
   }
   //Getter to access the dni field and check the status
   get dni() {
-    return this.myForm.get('dni')
+    return this.myForm.get('dni');
   }
 
-  constructor(private fb: FormBuilder, private userService: UserService, private firestore: AngularFirestore, private signUpService: SignUpService, private router: Router) { }
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private firestore: AngularFirestore,
+    private signUpService: SignUpService,
+    private router: Router
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  register(){
-    const {name, lastname, username, password, dni, email, phoneNum, location} = this.myForm.value
+  register() {
+    const {
+      name,
+      lastname,
+      username,
+      password,
+      dni,
+      email,
+      phoneNum,
+      location
+    } = this.myForm.value;
     //Adding the fields to the user object but NOT the password
     const user: Users = {
-      name, 
+      name,
       lastname,
       username,
       dni,
       email,
       phoneNum,
       location
-    }
+    };
     //Pass the user object and password to the userService.register() method
-    this.userService.register(user, password).then(()=>{
-      this.myForm.reset();
-      this.router.navigateByUrl('/auth/verification');
-    }, err => {
-      this.dataIsCorrect = false
-      this.textError = err.message
-    });
+    this.userService.register(user, password).then(
+      () => {
+        this.myForm.reset();
+        this.router.navigateByUrl('/auth/verification');
+      },
+      (err) => {
+        this.dataIsCorrect = false;
+        this.textError = err.message;
+      }
+    );
     //console.log(this.myForm);
   }
-
 }
-

@@ -9,14 +9,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SendEmailComponent } from './send-email/send-email.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
-
-
 @NgModule({
   declarations: [
     LoginComponent,
     SignUpComponent,
     MainPageComponent,
-    SendEmailComponent,
+    SendEmailComponent
   ],
   imports: [
     CommonModule,
@@ -25,4 +23,4 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     NgxSpinnerModule
   ]
 })
-export class RegisterLoginModule { }
+export class RegisterLoginModule {}

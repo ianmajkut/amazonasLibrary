@@ -1,83 +1,186 @@
-
-<div class="d-flex h-100 flex-column justify-content-center
-align-items-center py-5">
-          <h1 class="animate__animated animate__backInDown">Sign Up</h1>
-          <div class="container d-flex flex-column align-items-center containerForm animate__animated animate__backInUp">
-                    <div class="card">
-                              <div class="card-body">
-                                        <form autocomplete="off" [formGroup]="myForm">
-                                                  
-                                                  <div class="row align-items-center ">
-                                                            <div class="col-12 col-sm-12 col-md-6">
-                                                                      <label class="col-form-label">Name</label>
-                                                                      <input type="text" formControlName="name" class="form-control">
-                                                                      <span *ngIf="myForm.controls['name'].errors?.['required'] && myForm.controls['name'].touched" class="form-text text-danger" >Your name is required</span>
-                                                                      <span *ngIf="myForm.controls['name'].errors?.['minlength'] && myForm.controls['name'].touched" class="form-text text-danger" >Your name must have at least 2 characters</span>
-                                                            </div>
-                                                            <div class="col-12 col-sm-12 col-md-6">
-                                                                      <label class="col-form-label">Lastname</label>
-                                                                      <input type="text" formControlName="lastname" class="form-control ">
-                                                                      <span *ngIf="myForm.controls['lastname'].errors?.['required'] && myForm.controls['lastname'].touched" class="form-text text-danger" >The password is required</span>
-                                                                      <span *ngIf="myForm.controls['lastname'].errors?.['minlength'] && myForm.controls['lastname'].touched" class="form-text text-danger" >Your lastname must have at least 2 characters</span>
-                                                            </div>
-                                                            
-                                                  </div>
-                                                  <div class="row align-items-center ">
-                                                            <div class="col-12 col-sm-12 col-md-6">
-                                                                      <label class="col-form-label">Username</label>
-                                                                      <input type="text" formControlName="username" class="form-control">
-                                                                      <span *ngIf="myForm.controls['username'].errors?.['required'] && myForm.controls['username'].touched" class="form-text text-danger" >The username is required</span>
-                                                                      <span *ngIf="myForm.controls['username'].errors?.['minlength'] && myForm.controls['username'].touched" class="form-text text-danger" >The username must have at least 5 characters</span>
-                                                                      <span *ngIf="myForm.controls['username'].errors?.['usernameNoAvailable']" class="form-text text-danger" >Username already exists</span>
-                                                                      <span *ngIf="username?.pending" class="form-text text-muted" >Checking availability of <strong>{{ username?.value }}</strong></span>
-                                                            
-                                                            </div>
-                                                            <div class="col-12 col-sm-12 col-md-6">
-                                                                      <label class="col-form-label">Password</label>
-                                                                      <input type="password" formControlName="password" class="form-control ">
-                                                                      <span *ngIf="myForm.controls['password'].errors?.['required'] && myForm.controls['password'].touched" class="form-text text-danger" >The password is required</span>
-                                                                      <span *ngIf="myForm.controls['password'].errors?.['minlength'] && myForm.controls['password'].touched" class="form-text text-danger" >The password must have at least 6 characters</span>
-                                                            </div>
-                                                            
-                                                  </div>
-                                                  <div class="row align-items-center mt-3">
-                                                            <div class="col-12 col-sm-12 col-md-6">
-                                                                      <label class="col-form-label">DNI</label>
-                                                                      <input type="number" min="0" formControlName="dni" class="form-control">
-                                                                      <span *ngIf="myForm.controls['dni'].errors?.['required'] && myForm.controls['dni'].touched" class="form-text text-danger" >The DNI is required</span>
-                                                                      <span *ngIf="myForm.controls['dni'].errors?.['pattern'] && myForm.controls['dni'].touched" class="form-text text-danger" >Invalid DNI format</span>
-                                                                      <span *ngIf="myForm.controls['dni'].errors?.['dniNoAvailable']" class="form-text text-danger" >This DNI already exists on this app</span>
-                                                                      <span *ngIf="dni?.pending" class="form-text text-muted" >Checking availability of <strong>{{ dni?.value }}</strong></span>
-                                                            </div>
-                                                            <div class="col-12 col-sm-12 col-md-6">
-                                                                      <label class="col-form-label">Email</label>
-                                                                      <input type="email" formControlName="email" class="form-control ">
-                                                                      <span *ngIf="myForm.controls['email'].errors?.['required'] && myForm.controls['email'].touched" class="form-text text-danger" >The email is required</span>
-                                                                      <span *ngIf="myForm.controls['email'].errors?.['pattern'] && myForm.controls['email'].touched" class="form-text text-danger" >Invalid email format</span>
-                                                            </div>
-                                                  </div>
-                                                  <div class="row align-items-center mt-3">
-                                                            <div class="col-12 col-sm-12 col-md-6">
-                                                                      <label class="col-form-label">Phone Number</label>
-                                                                      <input type="number" min="0" formControlName="phoneNum" class="form-control">
-                                                                      <span *ngIf="myForm.controls['phoneNum'].errors?.['pattern'] && myForm.controls['phoneNum'].touched" class="form-text text-danger" >Invalid phoneNum format</span>
-                                                                      
-                                                            </div>
-                                                            <div class="col-12 col-sm-12 col-md-6">
-                                                                      <label class="col-form-label">Location</label>
-                                                                      <input type="text" formControlName="location" class="form-control ">
-                                                                      <span *ngIf="myForm.controls['location'].errors?.['required'] && myForm.controls['location'].touched" class="form-text text-danger" >The location is required</span>
-                                                            </div>
-                                                  </div>
-                                        </form>
-                              </div>
-                    </div>
-                    <div class="container mt-4 a">
-                              <button class="btn btn-primary p-2  btn-lg me-3" (click)="register()" [disabled]="!myForm.valid">Sign Up</button> 
-                    </div>
-
-                    <div *ngIf="!dataIsCorrect" class="alert alert-warning mt-3" role="alert">
-                              {{textError}}
-                    </div>
+<div
+  class="d-flex h-100 flex-column justify-content-center align-items-center py-5"
+>
+  <h1 class="animate__animated animate__backInDown">Sign Up</h1>
+  <div
+    class="container d-flex flex-column align-items-center containerForm animate__animated animate__backInUp"
+  >
+    <div class="card">
+      <div class="card-body">
+        <form autocomplete="off" [formGroup]="myForm">
+          <div class="row align-items-center">
+            <div class="col-12 col-sm-12 col-md-6">
+              <label class="col-form-label">Name</label>
+              <input type="text" formControlName="name" class="form-control" />
+              <span
+                *ngIf="myForm.controls['name'].errors?.['required'] && myForm.controls['name'].touched"
+                class="form-text text-danger"
+                >Your name is required</span
+              >
+              <span
+                *ngIf="myForm.controls['name'].errors?.['minlength'] && myForm.controls['name'].touched"
+                class="form-text text-danger"
+                >Your name must have at least 2 characters</span
+              >
+            </div>
+            <div class="col-12 col-sm-12 col-md-6">
+              <label class="col-form-label">Lastname</label>
+              <input
+                type="text"
+                formControlName="lastname"
+                class="form-control"
+              />
+              <span
+                *ngIf="myForm.controls['lastname'].errors?.['required'] && myForm.controls['lastname'].touched"
+                class="form-text text-danger"
+                >The password is required</span
+              >
+              <span
+                *ngIf="myForm.controls['lastname'].errors?.['minlength'] && myForm.controls['lastname'].touched"
+                class="form-text text-danger"
+                >Your lastname must have at least 2 characters</span
+              >
+            </div>
           </div>
+          <div class="row align-items-center">
+            <div class="col-12 col-sm-12 col-md-6">
+              <label class="col-form-label">Username</label>
+              <input
+                type="text"
+                formControlName="username"
+                class="form-control"
+              />
+              <span
+                *ngIf="myForm.controls['username'].errors?.['required'] && myForm.controls['username'].touched"
+                class="form-text text-danger"
+                >The username is required</span
+              >
+              <span
+                *ngIf="myForm.controls['username'].errors?.['minlength'] && myForm.controls['username'].touched"
+                class="form-text text-danger"
+                >The username must have at least 5 characters</span
+              >
+              <span
+                *ngIf="myForm.controls['username'].errors?.['usernameNoAvailable']"
+                class="form-text text-danger"
+                >Username already exists</span
+              >
+              <span *ngIf="username?.pending" class="form-text text-muted"
+                >Checking availability of
+                <strong>{{ username?.value }}</strong></span
+              >
+            </div>
+            <div class="col-12 col-sm-12 col-md-6">
+              <label class="col-form-label">Password</label>
+              <input
+                type="password"
+                formControlName="password"
+                class="form-control"
+              />
+              <span
+                *ngIf="myForm.controls['password'].errors?.['required'] && myForm.controls['password'].touched"
+                class="form-text text-danger"
+                >The password is required</span
+              >
+              <span
+                *ngIf="myForm.controls['password'].errors?.['minlength'] && myForm.controls['password'].touched"
+                class="form-text text-danger"
+                >The password must have at least 6 characters</span
+              >
+            </div>
+          </div>
+          <div class="row align-items-center mt-3">
+            <div class="col-12 col-sm-12 col-md-6">
+              <label class="col-form-label">DNI</label>
+              <input
+                type="number"
+                min="0"
+                formControlName="dni"
+                class="form-control"
+              />
+              <span
+                *ngIf="myForm.controls['dni'].errors?.['required'] && myForm.controls['dni'].touched"
+                class="form-text text-danger"
+                >The DNI is required</span
+              >
+              <span
+                *ngIf="myForm.controls['dni'].errors?.['pattern'] && myForm.controls['dni'].touched"
+                class="form-text text-danger"
+                >Invalid DNI format</span
+              >
+              <span
+                *ngIf="myForm.controls['dni'].errors?.['dniNoAvailable']"
+                class="form-text text-danger"
+                >This DNI already exists on this app</span
+              >
+              <span *ngIf="dni?.pending" class="form-text text-muted"
+                >Checking availability of
+                <strong>{{ dni?.value }}</strong></span
+              >
+            </div>
+            <div class="col-12 col-sm-12 col-md-6">
+              <label class="col-form-label">Email</label>
+              <input
+                type="email"
+                formControlName="email"
+                class="form-control"
+              />
+              <span
+                *ngIf="myForm.controls['email'].errors?.['required'] && myForm.controls['email'].touched"
+                class="form-text text-danger"
+                >The email is required</span
+              >
+              <span
+                *ngIf="myForm.controls['email'].errors?.['pattern'] && myForm.controls['email'].touched"
+                class="form-text text-danger"
+                >Invalid email format</span
+              >
+            </div>
+          </div>
+          <div class="row align-items-center mt-3">
+            <div class="col-12 col-sm-12 col-md-6">
+              <label class="col-form-label">Phone Number</label>
+              <input
+                type="number"
+                min="0"
+                formControlName="phoneNum"
+                class="form-control"
+              />
+              <span
+                *ngIf="myForm.controls['phoneNum'].errors?.['pattern'] && myForm.controls['phoneNum'].touched"
+                class="form-text text-danger"
+                >Invalid phoneNum format</span
+              >
+            </div>
+            <div class="col-12 col-sm-12 col-md-6">
+              <label class="col-form-label">Location</label>
+              <input
+                type="text"
+                formControlName="location"
+                class="form-control"
+              />
+              <span
+                *ngIf="myForm.controls['location'].errors?.['required'] && myForm.controls['location'].touched"
+                class="form-text text-danger"
+                >The location is required</span
+              >
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="container mt-4 a">
+      <button
+        class="btn btn-primary p-2 btn-lg me-3"
+        (click)="register()"
+        [disabled]="!myForm.valid"
+      >
+        Sign Up
+      </button>
+    </div>
+
+    <div *ngIf="!dataIsCorrect" class="alert alert-warning mt-3" role="alert">
+      {{ textError }}
+    </div>
+  </div>
 </div>

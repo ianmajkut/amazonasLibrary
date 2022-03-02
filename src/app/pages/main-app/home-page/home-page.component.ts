@@ -10,46 +10,44 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
-  styles: [
-  ]
+  styles: []
 })
 export class HomePageComponent implements OnInit {
+  user!: Observable<any>;
+  currentUser!: any;
 
-  user!: Observable<any>
-  currentUser!: any
-
-  constructor(public auth: AngularFireAuth, private userService : UserService, private firestore: AngularFirestore, private spinner : NgxSpinnerService ) {
-  
-  }
+  constructor(
+    public auth: AngularFireAuth,
+    private userService: UserService,
+    private firestore: AngularFirestore,
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit(): void {
-    this.spinner.show()
-    //Check of the user logged 
-    this.auth.authState.subscribe(user => {
+    this.spinner.show();
+    //Check of the user logged
+    this.auth.authState.subscribe((user) => {
       //If user is logged
-      if(user){
+      if (user) {
         let emailLower = user?.email?.toLowerCase();
         //Query to obtain the user on the database using the email
-        this.user = this.firestore.collection('users', ref => ref.where('email', '==', emailLower)).valueChanges();
-        this.user.subscribe(user => {
+        this.user = this.firestore
+          .collection('users', (ref) => ref.where('email', '==', emailLower))
+          .valueChanges();
+        this.user.subscribe((user) => {
           //Asign the user to the currentUser variable
-          this.currentUser = user[0]
+          this.currentUser = user[0];
           this.spinner.hide();
-        })
+        });
       }
-    })
-    
+    });
   }
 
-  logout(){
-    this.spinner.show()
+  logout() {
+    this.spinner.show();
     setTimeout(() => {
-      this.spinner.hide()
+      this.spinner.hide();
       this.auth.signOut();
-    } , 2000)
-    
-    
+    }, 2000);
   }
-
-
 }
